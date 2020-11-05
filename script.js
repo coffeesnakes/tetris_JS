@@ -33,17 +33,37 @@ let dropInterval = 1000;
 
 let timeLog = 0;
 
+
 function update(time = 0) {
   const deltaTime = time - timeLog;
   timeLog = time;
-  // console.log(deltaTime)
+
+  dropCounter += deltaTime;
+  if (dropCounter > dropInterval) {
+    player.pos.y++;
+    dropCounter = 0;
+  }
   draw();
   requestAnimationFrame(update);
 }
 
 const player = {
-  pos: { x: 5, y: 15 },
+  pos: { x: 5, y: 0 },
   matrix: matrix,
 }
+
+// event listeners accessing keyCode property moves position responsively.
+document.addEventListener('keydown', event => {
+  // console.log(event)
+  if (event.keyCode === 37) {
+    player.pos.x--;
+  } else if (event.keyCode === 39) {
+    player.pos.x++;
+  } else if (event.keyCode === 40) {
+    player.pos.y++;
+  }
+  }
+
+})
 
 update();
