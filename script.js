@@ -3,8 +3,6 @@ const context = canvas.getContext('2d');
 
 context.scale(15, 15)
 
-context.fillStyle = '#ffffeee';
-context.fillRect(0, 0, canvas.width, canvas.height);
 
 const matrix = [
   [0, 0, 0],
@@ -12,7 +10,11 @@ const matrix = [
   [0, 1, 0]
 ]
 
-function draw() { drawMatrix(player.matrix, player.pos) }
+function draw() {
+  context.fillStyle = '#000';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  drawMatrix(player.matrix, player.pos)
+}
 
 function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
@@ -35,4 +37,4 @@ const player = {
   matrix: matrix,
 }
 
-draw();
+update();
