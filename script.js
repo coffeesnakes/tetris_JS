@@ -26,8 +26,17 @@ function drawMatrix(matrix, offset) {
     });
   });
 }
+// drops the piece one coordinate on the drop interval 1000ms
+// dropCounter just tracks the location
+let dropCounter = 0;
+let dropInterval = 1000;
 
-function update() {
+let timeLog = 0;
+
+function update(time = 0) {
+  const deltaTime = time - timeLog;
+  timeLog = time;
+  // console.log(deltaTime)
   draw();
   requestAnimationFrame(update);
 }
