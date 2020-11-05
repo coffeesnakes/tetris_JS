@@ -34,6 +34,10 @@ let dropInterval = 1000;
 let timeLog = 0;
 
 
+function playerDrop() {
+  player.pos.y++;
+  dropCounter = 0;
+}
 function update(time = 0) {
   const deltaTime = time - timeLog;
   timeLog = time;
@@ -54,16 +58,14 @@ const player = {
 
 // event listeners accessing keyCode property moves position responsively.
 document.addEventListener('keydown', event => {
-  // console.log(event)
+
   if (event.keyCode === 37) {
     player.pos.x--;
   } else if (event.keyCode === 39) {
     player.pos.x++;
   } else if (event.keyCode === 40) {
-    player.pos.y++;
+    playerDrop();
   }
-  }
-
 })
 
 update();
