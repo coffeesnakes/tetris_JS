@@ -1,6 +1,11 @@
 for drop counter and  interval variables see: Delta Timing.
  https://en.wikipedia.org/wiki/Delta_timing
 
+  !!Future growth on the project: Add levels, increasing drop speed per level.
+
+
+
+!Research more on the actual  game of tetris too, all of my understanding and memory of it comes from my time spent as a child playing, which is what has made this fun, but to make it better I need to know the actual advanced parts of tetris lol
 
 // drops the piece one coordinate on the drop interval 1000ms
 // dropCounter just tracks the location
