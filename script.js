@@ -4,11 +4,11 @@ const context = canvas.getContext('2d');
 context.scale(20, 20)
 
 
-const matrix = [
-  [0, 0, 0],
-  [1, 1, 1],
-  [0, 1, 0]
-]
+// const matrix = [
+//   [0, 0, 0],
+//   [1, 1, 1],
+//   [0, 1, 0]
+// ]
 
 function collision(arena, player) {
   // m is for matrix, o is for offset
@@ -49,6 +49,16 @@ function draw() {
   context.fillRect(0, 0, canvas.width, canvas.height);
   drawMatrix(arena, {x:0, y:0})
   drawMatrix(player.matrix, player.pos)
+}
+
+function generatePiece(type) {
+  if (type = 'T') {
+    return [
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 1, 0]
+    ]
+  }
 }
 
 function drawMatrix(matrix, offset) {
@@ -137,7 +147,7 @@ const arena = enterTheMatrix(12, 20)
 
 const player = {
   pos: { x: 5, y: 5 },
-  matrix: matrix,
+  matrix: generatePiece('T'),
 }
 
 // event listeners accessing keyCode property moves position responsively.
