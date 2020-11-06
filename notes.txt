@@ -1,0 +1,15 @@
+for drop counter and  interval variables see: Delta Timing.
+ https://en.wikipedia.org/wiki/Delta_timing
+
+
+// drops the piece one coordinate on the drop interval 1000ms
+// dropCounter just tracks the location
+
+
+0 values in the arena are empty locations
+
+
+**colors are custom because default colors are bleh.
+
+**player matrix values are unique to identify.
+
