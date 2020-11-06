@@ -1,7 +1,7 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
-context.scale(15, 15)
+context.scale(20, 20)
 
 
 const matrix = [
@@ -10,9 +10,46 @@ const matrix = [
   [0, 1, 0]
 ]
 
+function collision(arena, player) {
+  // m is for matrix, o is for offset
+  const [m, o] = [player.matrix, player.pos];
+  for (let y = 0; y < m.length; ++y) {
+    for (let x = 0; x < m[y].length; ++x) {
+      if (m[y][x] !== 0 &&
+        (arena[y + o.y] &&
+          arena[y + o.y][x + o.x]) !== 0) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// creates matrix
+function enterTheMatrix(width, height) {
+  const matrix = [];
+  while (height--) {
+    matrix.push(new Array(width).fill(0));
+  }
+  return matrix;
+}
+
+function merge(arena, player) {
+  player.matrix.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        arena[y + player.pos.y][x + player.pos.x] = value;
+      }
+    });
+  })
+}
+
+const arena = enterTheMatrix(12, 20)
+
 function draw() {
   context.fillStyle = '#000';
   context.fillRect(0, 0, canvas.width, canvas.height);
+  drawMatrix(arena, {x:0, y:0})
   drawMatrix(player.matrix, player.pos)
 }
 
@@ -26,23 +63,36 @@ function drawMatrix(matrix, offset) {
     });
   });
 }
+
 // drops the piece one coordinate on the drop interval 1000ms
 // dropCounter just tracks the location
 let dropCounter = 0;
 let dropInterval = 1000;
-
 let timeLog = 0;
 
 
 function playerDrop() {
   player.pos.y++;
+  if (collision(arena, player)) {
+    player.pos.y--;
+    merge(arena, player);
+    player.pos.y = 0;
+  }
   dropCounter = 0;
 }
+
+function playerMove(direction) {
+  player.pos.x += direction;
+  if (collision(arena, player)) {
+    player.pos.x -= direction;
+  }
+}
+
 function update(time = 0) {
   const deltaTime = time - timeLog;
   timeLog = time;
-
   dropCounter += deltaTime;
+
   if (dropCounter > dropInterval) {
     player.pos.y++;
     dropCounter = 0;
@@ -52,17 +102,16 @@ function update(time = 0) {
 }
 
 const player = {
-  pos: { x: 5, y: 0 },
+  pos: { x: 5, y: 5 },
   matrix: matrix,
 }
 
 // event listeners accessing keyCode property moves position responsively.
 document.addEventListener('keydown', event => {
-
   if (event.keyCode === 37) {
-    player.pos.x--;
+    playerMove(-1)
   } else if (event.keyCode === 39) {
-    player.pos.x++;
+    playerMove(+1)
   } else if (event.keyCode === 40) {
     playerDrop();
   }
